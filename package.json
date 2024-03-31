@@ -12,6 +12,7 @@
   "keywords": [],
   "description": "A MERN (MongoDB, Express.js, React, Node.js) real estate application.",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "express": "^4.19.1",
     "mongoose": "^6.12.7",
