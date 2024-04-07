@@ -38,7 +38,6 @@ function SignUp() {
       setLoading(false);
       setError(error.message);
     }
-      
       }
   return (
     <div className="p-3 max-w-lg mx-auto ">
@@ -47,7 +46,7 @@ function SignUp() {
         <input type="text" placeholder="username" className="p-3 rounded-lg" id="username" onChange={handleChange}/>
         <input type="text" placeholder="email" className="p-3 rounded-lg" id="email" onChange={handleChange}/>
         <input type="password" placeholder="password" className="p-3 rounded-lg" id="password" onChange={handleChange}/>
-        <button disabled={loading} type="submit" className="border p-3 text-white uppercase border-none rounded-lg hover:opacity-80 disabled:opacity-50" style={{backgroundColor :'#120B0C'}}>
+        <button disabled={loading} type="submit" className="border cursor-pointer p-3 text-white uppercase border-none rounded-lg hover:opacity-80 disabled:opacity-50" style={{backgroundColor :'#120B0C'}}>
           {loading ? 'Loading...' : 'sign up'}
           </button>
       </form>
@@ -57,7 +56,7 @@ function SignUp() {
           <span className="text-blue-600">Sign in</span>
         </Link>
       </div>
-      {error && <p className="text-red-500 mt-5">{error}</p>}
+      {error && <p className="text-red-500 mt-5">username or email exist</p>}
     </div>
   )
 }

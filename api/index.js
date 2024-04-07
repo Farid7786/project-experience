@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import userRoutes from './routes/user.route.js'
 import authRoutes from './routes/auth.route.js'
 import dotenv from 'dotenv'
-import e from 'express';
 dotenv.config()
 mongoose.connect(process.env.MONGO).then(()=>{
     console.log('connected to MongoDb')
