@@ -20,6 +20,10 @@ function SignIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.email || !formData.password) {
+      dispatch(signInFailure('Please enter both email and password'));
+      return;
+    }
     try {
       dispatch(signInStart());
       const res = await fetch('/api/auth/signin', {
@@ -41,7 +45,7 @@ function SignIn() {
       dispatch(signInFailure(error.message));
     }
   };
-
+  
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Signin</h1>
