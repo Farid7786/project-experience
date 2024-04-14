@@ -35,16 +35,17 @@ function SignIn() {
       });
       const data = await res.json();
       console.log(data);
-      if (data.success === false) {
+      if (data.sucess === false) {
         dispatch(signInFailure(data.message));
-        return;
+      } else {
+        dispatch(signInSuccess(data));
+        navigate('/');
       }
-      dispatch(signInSuccess(data));
-      navigate('/');
     } catch (error) {
       dispatch(signInFailure(error.message));
     }
   };
+  
   
   return (
     <div className="p-3 max-w-lg mx-auto">
