@@ -5,6 +5,7 @@ import { app } from '../firebase';
 import { updateUserStart,updateUserSuccess,updateUserFailure,deleteUserStart, deleteUserFailure, deleteUserSuccess, signOutUserStart, signOutUserFailure } from '../redux/user/userslice';
 import { useDispatch } from 'react-redux';
 import { deleteUser } from 'firebase/auth';
+import { Link } from 'react-router-dom';
 function Profile() {
   const {currentUser,loading,error} = useSelector((state)=> state.user);
   const fileRef = useRef(null);
@@ -123,6 +124,9 @@ function Profile() {
         {currentUser && (
         <input id='password' className='border rounded-lg p-3' type='password' placeholder='password' defaultValue={currentUser.password}/>)}
         <button disabled={loading} className='p-3  text-white rounded-lg uppercase hover:opacity-85 disabled:opacity-50' style={{backgroundColor:'#120B0C'}}>{loading ? 'Loading.....' : 'Update'}</button>
+        <Link className=' text-white p-3 rounded-lg text-center hover:opacity-80 uppercase' style={{backgroundColor:'#302825'}} to={"/create-listing"}>
+          Create Listing
+        </Link>
         </form>
         <div className='flex justify-between mt-5'>
           <span onClick={handleDeleteUser} className='text-red-700 cursor-pointer'>Delete Account</span>
