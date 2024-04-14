@@ -2,8 +2,9 @@ import {useSelector} from 'react-redux';
 import {useEffect, useRef, useState} from 'react';
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage';
 import { app } from '../firebase';
-import { updateUserStart,updateUserSuccess,updateUserFailure } from '../redux/user/userslice';
+import { updateUserStart,updateUserSuccess,updateUserFailure,deleteUserStart, deleteUserFailure, deleteUserSuccess } from '../redux/user/userslice';
 import { useDispatch } from 'react-redux';
+import { deleteUser } from 'firebase/auth';
 function Profile() {
   const {currentUser,loading,error} = useSelector((state)=> state.user);
   const fileRef = useRef(null);
@@ -55,7 +56,7 @@ function Profile() {
         },
         body: JSON.stringify(formData),
       });
-      const data = res.json;
+      const data = await res.json();
       if(data.sucess === false)
       {
         dispatch(updateUserFailure(data.message));
@@ -66,12 +67,30 @@ function Profile() {
       dispatch(updateUserFailure(error.message))
     }
   }
+  const handleDeleteUser = async ()=>{
+    try {
+      dispatch(deleteUserStart());
+      const res= await fetch(`/api/user/delete/${currentUser._id}`,{
+        method : 'DELETE',
+      });
+      const data = await res.json();
+      if(data.sucess === false){
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+    }
+  }
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center'>Profile</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input onChange={(e)=>setFile(e.target.files[0])} type='file' ref={fileRef} hidden accept='image/*'/>
+        {currentUser && (
         <img onClick={()=> fileRef.current.click()} className='h-24 w-24 rounded-full object-cover cursor-pointer self-center my-4' src={formData.avatar || currentUser.avatar} alt="profile"/>
+        )}
         <p className='tes=xt-sm self-center'>
           {fileUploadError ?(
           <span className='text-red-700'> Error Image Uploading (image must be less then 2mb)</span>
@@ -83,18 +102,21 @@ function Profile() {
           ): ('')
           }
         </p>
-        <input id='username' className='border rounded-lg p-3' defaultValue={currentUser.username} type='text' placeholder='username' onChange={handleChange}/>
-        <input id='email' className='border rounded-lg p-3' defaultValue={currentUser.email} type='email' placeholder='email' onChange={handleChange}/>
-        <input id='password' className='border rounded-lg p-3' type='text' placeholder='password' defaultValue={currentUser.password}/>
+        {currentUser && (
+        <input id='username' className='border rounded-lg p-3' defaultValue={currentUser.username} type='text' placeholder='username' onChange={handleChange}/>)}
+        {currentUser && (
+        <input id='email' className='border rounded-lg p-3' defaultValue={currentUser.email} type='email' placeholder='email' onChange={handleChange}/>)}
+        {currentUser && (
+        <input id='password' className='border rounded-lg p-3' type='password' placeholder='password' defaultValue={currentUser.password}/>)}
         <button disabled={loading} className='p-3  text-white rounded-lg uppercase hover:opacity-85 disabled:opacity-50' style={{backgroundColor:'#120B0C'}}>{loading ? 'Loading.....' : 'Update'}</button>
         </form>
         <div className='flex justify-between mt-5'>
-          <span className='text-red-700 cursor-pointer'>Delete Account</span>
+          <span onClick={handleDeleteUser} className='text-red-700 cursor-pointer'>Delete Account</span>
           <span className='text-red-700 cursor-pointer'>Sign out</span>
         </div>
-      <p className='text-red-700 mt-5'>{error ? error.message : ''}</p>
+      <p className='text-red-700 mt-5'>{error ? error.message : ' '}</p>
     </div>
-  )
+  ) 
 }
 
 export default Profile
