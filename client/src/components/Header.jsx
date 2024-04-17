@@ -4,11 +4,12 @@ import {useSelector} from 'react-redux';
 function Header() {
     const {currentUser} = useSelector(state => state.user)
   return (
-    <header  style={{ backgroundColor: '#120B0C' }} className='shadow-md '>
-        <div className='flex justify-between mx-auto p-3  max-w-6xl items-center'>
+    <header  style={{ backgroundColor: '#120B0C' }} className='shadow-md flex flex-wrap'>
+        <div className='flex justify-between mx-auto p-3  max-w-6xl items-center '>
             <Link to='/'>
-            <h1 className='font-bold text-sm sm:text-xl flex flex-wrap'>
-                <span style={{color:'#FFFEFE'}}>PrimePropertyHub </span>
+            <h1 className='font-bold text-[6px] sm:text-xl flex flex-wrap'>
+                <span className='flex flex-wrap' style={{color:'#FFFEFE'}}>PrimeProperty</span>
+                <span style={{color:'#FFFEFE'}}>Hub</span>
                 <span className='text-slate-500'>Estate</span>
             </h1>
             </Link>
