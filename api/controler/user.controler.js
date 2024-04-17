@@ -1,6 +1,7 @@
 import bcryptjs from 'bcryptjs';
 import User from '../models/user.model.js';
 import { errorHandler } from '../utill/error.js';
+import Listing from '../models/listing.model.js';
 export const test = (req, res) => {
     res.json({
         message : 'Hello !!!'
@@ -29,9 +30,23 @@ export const deleteUser = async (req, res, next) => {
         if (req.user.id !== req.params.id) return next(errorHandler(401, 'You are not authorized'));
     try {
         await User.findByIdAndDelete(req.params.id); // Corrected to findByIdAndDelete
+        res.clearcookie('access_token');
         res.status(200).json({ message: 'User has been deleted!!' }); // Corrected response
     } catch (error) {
         next(error);
+    }
+}
+export const getUserListings = async (req,res,next)=>{
+    if(req.user.id === req.params.id){
+        try {
+            const listings = await Listing.find({userRef:req.params.id});
+            res.status(200).json(listings);
+        } catch (error) {
+            next(error);
+        }
+    }
+    else{
+        return next(errorHandler(401,'You can only view your own listings'))
     }
 }
 

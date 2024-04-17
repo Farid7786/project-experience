@@ -1,5 +1,5 @@
 import express from 'express';
-import {deleteUser, test, updateUser} from '../controler/user.controler.js'
+import {deleteUser, test, updateUser,getUserListings} from '../controler/user.controler.js'
 import { verifyToken } from '../verification/verifyUser.js';
 
  const router = express.Router();
@@ -7,4 +7,5 @@ import { verifyToken } from '../verification/verifyUser.js';
  router.get('/test', test);
  router.post('/update/:id',verifyToken, updateUser);
  router.delete('/delete/:id',verifyToken, deleteUser)
+ router.get('/listing/:id',verifyToken,getUserListings);
  export default router;
