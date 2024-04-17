@@ -49,7 +49,7 @@ export const getListing = async(req,res,next)=>{
         if(!listing){
             return next(errorHandler(401,'Listing not Found'))
         }
-        res.status(200).json(listing);
+        res.status(200).json(listing)
     } catch (error) {
         next(error);
     }
