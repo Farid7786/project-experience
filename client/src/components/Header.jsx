@@ -5,7 +5,7 @@ function Header() {
     const {currentUser} = useSelector(state => state.user)
   return (
     <header  style={{ backgroundColor: '#120B0C' }} className='shadow-md '>
-        <div className='flex justify-between mx-auto p-3  max-w-6xl items-center '>
+        <div className='flex justify-between mx-auto p-3  max-w-4xl items-center '>
             <Link to='/'>
             <h1 className='font-bold text-[6px] sm:text-xl flex flex-wrap'>
                 <span className='flex flex-wrap' style={{color:'#FFFEFE'}}>PrimeProperty</span>

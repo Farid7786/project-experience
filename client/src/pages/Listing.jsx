@@ -6,8 +6,12 @@ import {Swiper,SwiperSlide} from 'swiper/react';
 import SwiperCore from 'Swiper';
 import {Navigation} from 'Swiper/modules';
 import 'Swiper/css/bundle';
+import { useSelector } from 'react-redux';
+import Contact from '../components/Contact';
 function Listing() {
     const params = useParams()
+    const {currentUser} = useSelector((state) => state.user);
+    const [contact, setContact] = useState(false);
     SwiperCore.use([Navigation]);
     const [listing,setListing]=useState(null);
     const [loading,setLoading]= useState(false);
@@ -52,7 +56,7 @@ function Listing() {
         </div>
         <p className='flex items-center  gap-2  text-slate-700 my-2 text-sm p-4'> <FaMapMarkerAlt className='text-green-700'/> {listing.address}</p>
         <div className='flex gap-4 p-4'>
-          <p className='text-center bg-red-900 rounded-md p-1 text-white w-[100px] sm:w-[200px]'>{listing.type==='rent' ? 'For rent' : 'For Sale'}</p>
+          <p className='text-center bg-red-900 rounded-md p-1 text-white w-[90px] sm:w-[200px]'>{listing.type==='rent' ? 'For rent' : 'For Sale'}</p>
           {
             listing.offer && (
               <p className='text-center bg-green-900 rounded-md p-1 text-white w-[100px] sm:w-[200px] '>{+listing.regularPrice - +listing.discountedPrice}/ discount</p>
@@ -61,7 +65,7 @@ function Listing() {
         </div>
       
       <div className='p-3'>
-        <p className='text-slate-800'>
+        <p className='text-slate-800 text-justify'>
           <span className=' font-semibold text-black'>Description - {' '}</span>
           {listing.description}
         </p>
@@ -83,6 +87,10 @@ function Listing() {
             {listing.furnished ? 'Furnished' : 'Not Furnished'}
           </li>
         </ul>
+        {currentUser && listing.useRef !== currentUser._id && !contact && (
+        <button onClick={()=>setContact(true)} className='bg-slate-700 text-white p-3 rounded-lg w-[300px] sm:w-[900px] ml-6 sm:ml-0 hover:opacity-95 uppercase mt-4'>Contact LandLoard</button>
+        )}
+        {contact && <Contact listing={listing}/>}
       </div>
       </div>
       </div>
