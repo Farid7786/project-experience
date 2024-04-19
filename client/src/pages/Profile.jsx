@@ -16,6 +16,7 @@ function Profile() {
   const [showListingsError,setShowListingsError]= useState(false);
   const [userListings,setUserListings] = useState([])
   const [deleteError,setDeleteError] = useState(false);
+  const [updateError,setUpdateError] =useState(false);
   const dispatch = useDispatch();
   console.log(filePerc);
   console.log(fileUploadError);
@@ -53,6 +54,7 @@ function Profile() {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
+      setUpdateError(false);
       const res = await fetch(`/api/user/update/${currentUser._id}`,{
         method: 'POST',
         headers:{
@@ -64,10 +66,13 @@ function Profile() {
       if(data.sucess === false)
       {
         dispatch(updateUserFailure(data.message));
+        setUpdateError(true);
         return;
       }
+      setUpdateError(false);
       dispatch(updateUserSuccess(data));
     } catch (error) {
+      setUpdateError(true);
       dispatch(updateUserFailure(error.message))
     }
   }
@@ -188,6 +193,7 @@ function Profile() {
       ))}
       </div>
       }
+      {updateError && <p className='text-red-700'>{error}</p>}
     </div>
   ) 
 }
