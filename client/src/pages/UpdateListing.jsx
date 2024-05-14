@@ -146,7 +146,7 @@ function UpdateListing() {
     <h1 className='text-3xl font-semibold text-center my-7'>Update a Listing</h1>
     <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4'>
       <div className='flex flex-col gap-4 flex-1'>
-        <input className='border p-3 rounded-lg' type="text" placeholder='Name' maxLength='22'minLength='8' required id="name" onChange={handleChange} value={formData.name} />
+        <input className='border p-3 rounded-lg' type="text" placeholder='Name' minLength='8' required id="name" onChange={handleChange} value={formData.name} />
         <textarea className='border p-3 rounded-lg' type="text" placeholder='Description' required id="description" onChange={handleChange} value={formData.description} />
         <input className='border p-3 rounded-lg' type="text" placeholder='Address' required id="address" onChange={handleChange} value={formData.address}/>
     <div className=' flex gap-7 flex-wrap mt-4'>

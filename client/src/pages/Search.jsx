@@ -1,6 +1,8 @@
 import { set } from 'mongoose';
 import React, { useEffect, useState } from 'react'
 import {useNavigate} from 'react-router-dom';
+import ListingItems from '../components/ListingItems';
+import Home from './Home';
 function Search() {
     const navigate = useNavigate();
     const [sidebardata,setSidebardata] = useState({
@@ -84,11 +86,11 @@ function Search() {
     }
   return (
     <div className='flex flex-col md:flex-row'>
-        <div className='p-7 border-b-2 md:border-r-2 bg-yellow-400 border-gray-500 md:min-h-screen'>
+        <div className='p-7 border-b-2 md:border-r-2  border-gray-500 md:min-h-screen'>
             <form onSubmit={handleSubmit} className='flex flex-col gap-8 '>
                 <div className='flex items-center gap-2 flex-wrap'>
                     <label className='whitespace-nowrap font-semibold'>Your Search : </label>
-                    <input type="text" id='searchTerm' placeholder='Search....' className='w-full rounded-lg p-3 border bg-gray-200' value={sidebardata.searchTerm} onChange={handleChange} />
+                    <input type="text" id='searchTerm' placeholder='Search....' className='w-full rounded-lg p-3 border ' value={sidebardata.searchTerm} onChange={handleChange} />
                 </div>
                 <div className='flex gap-2 flex-wrap'>
                     <label className='whitespace-nowrap font-semibold'>Type : </label>
@@ -110,7 +112,7 @@ function Search() {
                     </div>
                 </div>
                 <div className='flex gap-2'>
-                    <label className='font-semibold'>Amenities : </label>
+                    <label className='font-semibold whitespace-nowrap'>Amenities : </label>
                     <div className='flex gap-2 items-center'>
                         <input type="checkbox" id='parking' className='w-5 bg-gray-200' onChange={handleChange} checked={sidebardata.parking}/>
                         <span>Parking</span>
@@ -132,8 +134,25 @@ function Search() {
                 <button className='text-white bg-slate-800 uppercase rounded-lg hover:opacity-95 disabled:opacity-60 p-3'>{loading ? 'searching......':'search'}</button>
             </form>
         </div>
-        <div className='bg-white w-[340px] sm:w-[1100px] max-h-screen'>
-            <h1 className='text-3xl font-semibold mt-5'>Results :</h1>
+        <div className=' flex flex-col'>
+            <h1 className='text-3xl font-semibold mt-5 p-3'>Results :</h1>
+            <div className='p-7 flex flex-wrap gap-4'>
+                {!loading && listings.length === 0 &&(
+                    <p className='text-xl text-center text-slate-700'>No Listings Found !!</p>
+                )}
+                {
+                    loading&&(
+                        <p className='text-xl text-slate-700 text-center w-full'>Loading...</p>
+                    )
+                }
+                {!loading && 
+                listings &&
+                listings.map((listing)=>(
+                    <ListingItems key={listing._id} listing={listing} />
+                ))}
+            </div>
+        </div>
+        <div>
         </div>
     </div>
   )
