@@ -3,7 +3,7 @@ import { FaSpinner, FaMapMarkerAlt, FaBed, FaBath, FaParking, FaChair } from 're
 import { useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper';
-import 'swiper/swiper-bundle.min.css'; // Ensure this path is correct
+import 'node_modules/swiper/swiper-bundle.css'; // Ensure this path is correct
 import { useSelector } from 'react-redux';
 import Contact from '../components/Contact';
 
