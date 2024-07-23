@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import {FaSpinner,FaMapMarkerAlt, FaBed, FaBath, FaParking, FaChair} from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import {Swiper,SwiperSlide} from 'swiper/react';
-import SwiperCore from 'Swiper';
+import SwiperCore from 'swiper';
 import {Navigation} from 'Swiper/modules';
 import 'Swiper/css/bundle';
 import { useSelector } from 'react-redux';
